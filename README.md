@@ -1,45 +1,43 @@
-# Content Auditor
+# AEO Optimizer
 
-A local browser-based content auditor built from `Guidelines for Authors.docx`.
+A Python-based URL crawler and AEO readiness auditor for static, machine-liftable HTML. It checks whether a page is structured for AI engines and answer engines to extract direct, trustworthy answers without relying on heavy client-side JavaScript.
 
-This workspace also includes `aeo_audit.py`, a URL-based AEO readiness auditor for static, machine-liftable HTML.
+## What It Checks
 
-## What it checks
-
-- Banned wording such as `also`, opinion phrases, weak certainty, and back-references.
-- Sentences that start with `if` or `because`.
-- Long sentences, passive voice, half-sentence list introductions, and possibility modals.
-- Central entity coverage across the intro and sections.
-- Central search intent coverage in the intro.
-- Direct answers under question headings.
-- Research, numeric detail, examples, units, percentages, and first-use abbreviations.
-- Featured snippet length, image introductions, table comparison language, and anchor placement.
+- Static H2/H3 content modules that AI crawlers can lift without executing JavaScript.
+- Question-style H2/H3 headings.
+- Clear 40-60 word answers immediately after headings.
+- Bullet lists, numbered lists, and comparison tables.
+- Definition -> Detail -> Example section structure.
+- FAQPage, HowTo, Product, Article, and Organization schema.
+- Author bylines, expert bios, proprietary data, quotes, visuals, and freshness signals.
+- `robots.txt` and `llms.txt` readiness for GPTBot and CCBot.
+- Long paragraphs and marketing fluff that reduce factual extractability.
 
 ## Run
 
 ```powershell
-& 'C:\Users\Abhishek.kumar.AGILEVEN\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' app.py 8000
+python aeo_audit.py https://example.com/page --format markdown --output aeo-report.md
 ```
 
-Then open `http://127.0.0.1:8000`.
+Use JSON output for automation:
 
-## Run the AEO URL audit
+```powershell
+python aeo_audit.py https://example.com/page --format json --output aeo-report.json
+```
+
+If Python is not on PATH in the Codex runtime, use the bundled interpreter:
 
 ```powershell
 & 'C:\Users\Abhishek.kumar.AGILEVEN\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' aeo_audit.py https://example.com/page --format markdown --output aeo-report.md
 ```
 
-Use `--format json` when you need structured output for another workflow.
+## Output
 
-The AEO audit checks:
+The report includes:
 
-- Static H2/H3 content modules that AI crawlers can lift without client-side JavaScript.
-- Question-style headings and 40-60 word direct answers.
-- Bullets, numbered lists, comparison tables, and Definition -> Detail -> Example structure.
-- FAQPage, HowTo, Product, Article, and Organization schema.
-- Author, expert bio, proprietary data, quote, visual, and freshness signals.
-- `robots.txt` and `llms.txt` readiness for GPTBot and CCBot.
-
-## Supported input
-
-Paste content directly, or upload `.txt`, `.md`, `.docx`, `.pdf`, `.html`, `.csv`, or `.rtf`.
+- A numeric AEO readiness score.
+- A snapshot of headings, answer blocks, schemas, formatting, and technical readiness.
+- Prioritized findings with evidence and exact actions.
+- A step-by-step AEO Action Plan.
+- A list of machine-liftable H2/H3 sections with answer length and formatting signals.
