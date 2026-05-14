@@ -14,7 +14,17 @@ A Python-based URL crawler and AEO readiness auditor for static, machine-liftabl
 - `robots.txt` and `llms.txt` readiness for GPTBot and CCBot.
 - Long paragraphs and marketing fluff that reduce factual extractability.
 
-## Run
+## Vercel Deployment
+
+The project includes:
+
+- `index.html`: the public web interface served at `/`.
+- `api/audit.py`: a Vercel Python Function served at `/api/audit`.
+- `vercel.json`: function bundle configuration.
+
+After Vercel redeploys the latest `main` branch, open the project URL and run an audit from the form.
+
+## CLI Run
 
 ```powershell
 python aeo_audit.py https://example.com/page --format markdown --output aeo-report.md
